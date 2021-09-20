@@ -24,18 +24,15 @@ module.exports = config => {
 
   config.set({
     basePath: '',
-    files: [testFile].map(pattern => ({ pattern, watched: false })),
+    files: ['test/chai-assertions.js', testFile].map(pattern => ({ pattern, watched: false })),
     frameworks: ['mocha', 'chai-dom', 'sinon-chai', 'webpack'],
     colors: true,
     reporters: ['mocha', 'coverage', 'BrowserStack'],
     logLevel: config.LOG_INFO,
     preprocessors: {
-      'src/**/*Spec.js': ['webpack']
-    },
-    client: {
-      mocha: {
-        require: [require.resolve('./test/chai-assertions.js')]
-      }
+      'src/**/*Spec.js': ['webpack'],
+      'test/chai-assertions.js': ['webpack'],
+      'node_modules/sinon/pkg/sinon.js': ['webpack']
     },
     webpack: require('./webpack.karma.js'),
     webpackMiddleware: {
@@ -91,7 +88,7 @@ module.exports = config => {
       }
     },
     browsers: CI
-      ? [/*'bs_win_ie11',*/ 'bs_win_edge', 'bs_mac_chrome', 'bs_mac_firefox', 'bs_mac_safari']
+      ? ['bs_win_ie11', 'bs_win_edge', 'bs_mac_chrome', 'bs_mac_firefox', 'bs_mac_safari']
       : ['Chrome'],
     // @see https://github.com/browserstack/karma-browserstack-example/blob/master/karma.conf.js
     captureTimeout: 3e5,

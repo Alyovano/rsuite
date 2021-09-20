@@ -61,7 +61,6 @@ chai.use((chai, { flag }) => {
    * Assertion for comparing floating point numbers "equality"
    */
   chai.Assertion.addMethod('almost', function (value) {
-    var obj = flag(this, 'object');
-    new chai.Assertion(Number(obj)).to.be.closeTo(Number(value), 1e-6);
+    new chai.Assertion(Number(flag(this, 'object'))).to.be.closeTo(Number(value), 1e-6);
   });
 });
